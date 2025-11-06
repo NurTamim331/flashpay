@@ -7,18 +7,32 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 
 const ProfileEdit = () => {
-    const { user } = use(AuthContext);
+    
+    const { loading,user } = use(AuthContext);
+    if(loading){
+        return <span className='loading-ball loading'></span>
+    }
     const [imageUrl, setImageUrl] = useState(user.photoURL);
+    const [name,setName] =  useState(user.displayName);
     const navigate = useNavigate()
     const handleUpdate = async (e) => {
         e.preventDefault();
         const form = e.target;
-        const url = form.new_url.value;
+        let url = form.new_url.value;
+        let nm = form.new_name.value;
+        if(!url){
+            url = user.photoURL;
+        }
+        if(!nm){
+            nm = user.displayName
+        }
+        setName(nm)
         setImageUrl(url)
         try {
             // ✅ Update the Firebase Auth user’s photoURL
             await updateProfile(user, {
                 photoURL: url,
+                displayName:nm
             });
 
             toast.success("Profile image updated successfully!");
@@ -40,6 +54,8 @@ const ProfileEdit = () => {
                     <form onSubmit={handleUpdate} className='flex flex-col justify-center gap-y-2 items-center p-2'>
                         <label htmlFor="new_url">Provide the new image URL here</label>
                         <input name='new_url' className='bg-gray-100 p-2 input' type="text" placeholder='image url' />
+                        <label htmlFor="name">New User Name</label>
+                        <input name='new_name' className='bg-gray-100 p-2 input' type="text" placeholder='New User Name' />
                         <button type='submit' className='btn hover:bg-green-400 bg-green-200'>Submit</button>
                     </form>
                 </div>
