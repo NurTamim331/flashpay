@@ -10,6 +10,7 @@ const BillDetails = () => {
     const navigate = useNavigate();
     const bills = useLoaderData()
     const { paid, setPaid, balance, setBalance } = use(AuthContext);
+    console.log(Array.isArray(paid));
     console.log(paid);
 
     // find the specific bill using the id from URL

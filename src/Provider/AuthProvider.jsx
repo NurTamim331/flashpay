@@ -13,6 +13,9 @@ import {
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [paid,setPaid] = useState([]);
+    useEffect(()=>{
+      setPaid(paid);
+    },[paid])
     const [user, setUser] = useState(null);
     // loading state mainly handles the async operation of firebase. When we are waiting for firebase to respond, we can show a loader using this loading state.
     // laoding true means we are waiting for firebase, so don't redirect yet
