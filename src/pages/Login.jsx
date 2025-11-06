@@ -111,8 +111,9 @@ const Login = () => {
                         {
                             error ? <p>{error}</p> : <></>
                         }
-                    </div>
 
+                    </div>
+                    <Link to='/forget' className='text-error p-2'>Forget Password?</Link>
                     <div>
                         Already Have An account? <Link className='text-[#9333EA] ml-1 font-semibold hover:text-red-500' to='/register'>Register Here</Link>
                     </div>

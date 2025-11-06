@@ -9,6 +9,7 @@ import BillPage from "../pages/BillPage";
 import BillDetails from "../Components/BillDetails";
 import PrivateRuote from "../Provider/PrivateRuote";
 import ProfileEdit from "../Components/ProfileEdit";
+import ForgetPassword from "../Components/ForgetPassword";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         element: <PrivateRuote>
             <ProfileEdit></ProfileEdit>
         </PrivateRuote>,
+    },
+    {
+        path:'/forget',
+        Component:ForgetPassword
     }
 
 ])

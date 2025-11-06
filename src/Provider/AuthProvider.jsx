@@ -8,7 +8,8 @@ import {
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
-    signInWithPopup, GoogleAuthProvider
+    signInWithPopup, GoogleAuthProvider,
+    sendPasswordResetEmail 
 } from "firebase/auth";
 import { toast } from "react-toastify";
 const provider = new GoogleAuthProvider();
@@ -52,6 +53,10 @@ const AuthProvider = ({ children }) => {
             toast.error(error.message)
         }
     } 
+    const resetEmail = (email)=>{
+        return sendPasswordResetEmail(auth, email)
+  
+    }
     // aoon auth state change ensures that the user is getting saved in login/register and also on page refresh
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -75,7 +80,8 @@ const AuthProvider = ({ children }) => {
         balance,
         setBalance,
         paid, setPaid,
-        GoogleAuthProvider, signInWithGoogle
+        GoogleAuthProvider, signInWithGoogle,
+        resetEmail
     };
     return <AuthContext value={authData}>{children}</AuthContext>;
 };
