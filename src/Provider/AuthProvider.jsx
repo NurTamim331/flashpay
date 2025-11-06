@@ -8,14 +8,16 @@ import {
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
+    signInWithPopup, GoogleAuthProvider
 } from "firebase/auth";
-
+import { toast } from "react-toastify";
+const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
-    const [paid,setPaid] = useState([]);
-    useEffect(()=>{
-      setPaid(paid);
-    },[paid])
+    const [paid, setPaid] = useState([]);
+    useEffect(() => {
+        setPaid(paid);
+    }, [paid])
     const [user, setUser] = useState(null);
     // loading state mainly handles the async operation of firebase. When we are waiting for firebase to respond, we can show a loader using this loading state.
     // laoding true means we are waiting for firebase, so don't redirect yet
@@ -40,6 +42,16 @@ const AuthProvider = ({ children }) => {
     const logOut = () => {
         return signOut(auth);
     };
+    const signInWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            
+            return result;
+        } 
+        catch (error) {
+            toast.error(error.message)
+        }
+    } 
     // aoon auth state change ensures that the user is getting saved in login/register and also on page refresh
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -62,7 +74,8 @@ const AuthProvider = ({ children }) => {
         updateUser,
         balance,
         setBalance,
-        paid,setPaid
+        paid, setPaid,
+        GoogleAuthProvider, signInWithGoogle
     };
     return <AuthContext value={authData}>{children}</AuthContext>;
 };
