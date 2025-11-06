@@ -7,6 +7,8 @@ import BillCard from '../Components/BillCard';
 const BillPage = () => {
     const bills = useLoaderData();
     console.log(bills);
+    const billsArray = Array.isArray(bills) ? bills : [];
+    console.log(billsArray);
     return (
         <div>
             <header>

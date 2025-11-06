@@ -14,3 +14,19 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+Project Name : flashpay
+Purpose : Making utility bill payments faster and reducing frictions in between
+key features: Fireabase authentication, support of 10+ types of utility bills, one click pay
+npm packages used:
+1. react router
+2. React icons
+3. react toastify
+4. firabase
+5. swiperjs
+6. daisy  ui
+7. tailwind css
+
+live link : https://flashpay-7c474.web.app/
+github ripository link : https://github.com/NurTamim331/flashpay.git
+

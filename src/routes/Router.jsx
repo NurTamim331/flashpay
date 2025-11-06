@@ -35,12 +35,12 @@ const router = createBrowserRouter([
         element:<PrivateRuote>
             <BillPage></BillPage>
         </PrivateRuote>,
-        loader:()=>fetch('../../public/Bills.json')
+        loader:()=>fetch('/Bills.json')
     },
     {
         path:'/billDetails/:id',
         Component:BillDetails,
-        loader:()=>fetch('../../public/Bills.json')
+        loader:()=>fetch('/Bills.json')
     }
     
 ])
