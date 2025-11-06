@@ -1,8 +1,11 @@
-import React from "react";
+import React, { use } from "react";
+import { SiTicktick } from "react-icons/si";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const BillCard = ({ bill }) => {
-    const { bill_type, icon, organization, amount, due_date } = bill;
+    const {paid} = use(AuthContext)
+    const { bill_type, icon, organization, amount, due_date,id } = bill;
     const navigate = useNavigate();
     const handleRedirect = ()=>{
         navigate(`/billDetails/${bill.id}`)
@@ -17,8 +20,8 @@ const BillCard = ({ bill }) => {
                     className="w-12 h-12 object-contain bg-gray-50 rounded-xl p-2"
                 />
                 <div>
-                    <h2 className="text-lg font-semibold capitalize text-gray-800">
-                        {bill_type}
+                    <h2 className="text-lg font-semibold capitalize text-gray-800 flex gap-x-2 justify-between items-center">
+                        {bill_type} {paid.includes((Number)(id)) ? <SiTicktick color="green"/>:<></>}
                     </h2>
                     <p className="text-sm text-gray-500">{organization}</p>
                     {due_date && (

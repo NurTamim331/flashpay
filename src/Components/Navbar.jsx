@@ -73,14 +73,14 @@ const Navbar = () => {
                         <div className='flex gap-x-2 '>
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                    <CgProfile size={100}/>
+                                    <img src={user.photoURL} alt="" />
                                 </div>
                                 <ul
                                     tabIndex="-1"
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-violet-500">
                                     <li>Email: {user.email}</li>
                                     <li>Balance: {balance}</li>
-                                    <li>Photo Url: {user.photoURL}</li>
+                                    
                                 </ul>
                             </div>
                             <button onClick={handleLogout} className="btn btn-error">Logout</button>

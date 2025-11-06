@@ -8,40 +8,56 @@ import Homelayout from "../layouts/Homelayout";
 import BillPage from "../pages/BillPage";
 import BillDetails from "../Components/BillDetails";
 import PrivateRuote from "../Provider/PrivateRuote";
+import ProfileEdit from "../Components/ProfileEdit";
 
 const router = createBrowserRouter([
     {
-        path:'/',
-        Component:Home,
-        children:[
+        path: '/',
+        Component: Home,
+        children: [
             {
-                path:'/',
-                default:true,
-                Component:Homelayout
+                path: '/',
+                default: true,
+                Component: Homelayout
             },
             {
-                path:'/login',
-                Component:Login
+                path: '/login',
+                Component: Login
             },
             {
-                path:'register',
-                Component:Register
+                path: 'register',
+                Component: Register
             }
         ]
-        
+
     },
     {
-        path:'/bills',
-        element:<PrivateRuote>
+        path: '/bills',
+        element: <PrivateRuote>
             <BillPage></BillPage>
         </PrivateRuote>,
-        loader:()=>fetch('/Bills.json')
+        loader: () => fetch('/Bills.json')
     },
     {
-        path:'/billDetails/:id',
-        Component:BillDetails,
-        loader:()=>fetch('/Bills.json')
+        path: '/billDetails/:id',
+        element: <PrivateRuote>
+            <BillDetails></BillDetails>
+        </PrivateRuote>,
+        loader: () => fetch('/Bills.json')
+    },
+    {
+        path: '/profile',
+        element: <PrivateRuote>
+            <Profile></Profile>
+        </PrivateRuote>,
+
+    },
+    {
+        path: '/edit-profile',
+        element: <PrivateRuote>
+            <ProfileEdit></ProfileEdit>
+        </PrivateRuote>,
     }
-    
+
 ])
 export default router;
