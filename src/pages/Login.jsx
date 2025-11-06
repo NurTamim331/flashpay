@@ -2,13 +2,14 @@ import React, { use, useState } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import logo from '../assets/logo.jpg'
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
 import { toast } from 'react-toastify';
 
 const Login = () => {
     const { signIn, setLoading, setUser, loading } = use(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
     const [error, setError] = useState("");
     const handleLogin = (e) => {
         e.preventDefault();
@@ -37,7 +38,11 @@ const Login = () => {
             signIn(mail, ps).then(newUser => {
                 setUser(newUser.user);
                 toast.success("Login successful 🎯");
-                navigate('/');
+                if(location.state){
+                    navigate(location.state)
+                }else{
+                    navigate('/');
+                }
             }).catch(error => {
                 toast.error(error.message);
             })
