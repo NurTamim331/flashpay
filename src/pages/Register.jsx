@@ -1,13 +1,15 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import logo from '../assets/logo.jpg'
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { updateProfile } from 'firebase/auth';
 const Register = () => {
-    const { signUp, setUser, setLoading, user } = use(AuthContext);
+    const navigate = useNavigate();
+    const { createUser, setUser, setLoading, user,updateUser } = use(AuthContext);
     const addNewUser = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -16,12 +18,21 @@ const Register = () => {
         const url = form.photo_url.value;
         const pass = form.password.value;
 
-        signUp(email, pass).then(newUser => {
-            newUser.displayName = name;
-            newUser.photoURL = url;
-            setUser(newUser);
+        createUser(email, pass).then(result => {
+            const user = result.user;
+            updateUser({ displayName: name, photoURL: url })
+                .then(() => {
+                    setUser({ ...user, displayName: name, photoURL: url,balance:10000 });
+                    navigate("/");
+                })
+                .catch((error) => {
+                    setUser(user); // if error, keep the previous user
+                });
+
             console.log(user);
             toast.success("Signed up successfully 🎉🎉 ");
+            
+            navigate('/');
 
         }).catch((e) => {
             toast.error(e.message)
@@ -31,9 +42,7 @@ const Register = () => {
 
     return (
         <div className='bg-violet-50'>
-            <header className='w-full'>
-                <Navbar></Navbar>
-            </header>
+
 
             <main className='w-11/12 mx-auto mt-2  flex flex-col justify-center items-center '>
                 <img src={logo} className='w-[20%] max-h-20 object-contain rounded-full' alt="" />
@@ -87,7 +96,7 @@ const Register = () => {
                             Sign Up
                         </button>
                         <p>
-                            
+
                         </p>
                     </form>
                     <div className="flex items-center gap-4 w-full my-4">
@@ -109,9 +118,7 @@ const Register = () => {
 
                 </div>
             </main>
-            <footer className='w-full'>
-                <Footer></Footer>
-            </footer>
+
         </div>
     );
 };

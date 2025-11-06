@@ -11,9 +11,11 @@ const Login = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const handleLogin = (e) => {
+        e.preventDefault();
         const form = e.target;
-        const mail = e.email.value;
-        const ps = e.password.value;
+        console.log(form);
+        const mail = form.email.value;
+        const ps = form.password.value;
 
         const hasUppercase = /[A-Z]/.test(ps);  // checks for uppercase letter
         const hasLowercase = /[a-z]/.test(ps);  // checks for lowercase letter
@@ -33,7 +35,7 @@ const Login = () => {
         }
         else {
             signIn(mail, ps).then(newUser => {
-                setUser(newUser);
+                setUser(newUser.user);
                 toast.success("Login successful 🎯");
                 navigate('/');
             }).catch(error => {
@@ -44,10 +46,6 @@ const Login = () => {
     return (
 
         <div className='bg-violet-50'>
-
-            <header className='w-full'>
-                <Navbar></Navbar>
-            </header>
             <main className='w-11/12 mx-auto mt-2  flex flex-col justify-center items-center '>
                 <img src={logo} className='w-[20%] max-h-20 object-contain rounded-full' alt="" />
                 {/* login card container */}
@@ -104,9 +102,7 @@ const Login = () => {
 
                 </div>
             </main>
-            <footer className='w-full'>
-                <Footer></Footer>
-            </footer>
+            
         </div>
     );
 };

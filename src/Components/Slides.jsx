@@ -5,7 +5,7 @@ import "swiper/css"; // Swiper core styles
 import titas from '../assets/titas.png'
 import wasa from '../assets/wasa.jfif'
 import desco from '../assets/desco.png'
-import btcl from '../assets/btcl.svg'
+import btcl from '../assets/btcl.png'
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
 const Slides = () => {
@@ -13,7 +13,7 @@ const Slides = () => {
         wasa, titas, desco, btcl
     ];
     return (
-        <div className="w-full flex justify-center mt-8 px-4 rounded-lg bg-violet-200 p-4">
+        <div className="w-full flex justify-center mt-8 px-4 rounded-lg py-2 p-4">
             <div className="w-full max-w-3xl">
                 <Swiper
                     spaceBetween={20}

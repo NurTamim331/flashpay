@@ -1,10 +1,16 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import logo from '../assets/logo.jpg'
 import { NavLink, useNavigate } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
-
+import { CgProfile } from "react-icons/cg";
+import { toast } from 'react-toastify';
 const Navbar = () => {
-
+    const { logOut,balance,setBalance } = use(AuthContext);
+    const [view, setView] = useState(false);
+    
+    const toggleView = () => {
+        setView(!view);
+    }
     const navigate = useNavigate();
     const toLogin = () => {
         navigate('/login');
@@ -13,6 +19,14 @@ const Navbar = () => {
         navigate('/register');
     }
     const { user, loading, setLoading } = use(AuthContext);
+    const handleLogout = ()=>{
+        logOut().then(()=>{
+            toast.success("Logged Out");
+            navigate('/');
+        }).catch((error)=>{
+            toast.error(error.message);
+        })
+    }
     console.log(user);
     if (loading) {
         return <div className='flex justify-center items-center gap-x-3 p-4'>
@@ -55,8 +69,28 @@ const Navbar = () => {
             </div>
             <div className="navbar-end text-black ">
                 {
-                    user.email ? <p>Hello, {user.email}</p> : <div className='flex gap-2'> <button onClick={toLogin} className='btn  bg-violet-200'>Login</button>
-                        <button onClick={toRegister} className='btn  bg-violet-500'>Sign up</button></div>
+                    user?.email?
+                        <div className='flex gap-x-2 '>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <CgProfile size={100}/>
+                                </div>
+                                <ul
+                                    tabIndex="-1"
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-violet-500">
+                                    <li>Email: {user.email}</li>
+                                    <li>Balance: {balance}</li>
+                                    <li>Photo Url: {user.photoURL}</li>
+                                </ul>
+                            </div>
+                            <button onClick={handleLogout} className="btn btn-error">Logout</button>
+
+                        </div>
+                        :
+                        <div className='flex gap-2'>
+                            <button onClick={toLogin} className='btn  bg-violet-200'>Login</button>
+                            <button onClick={toRegister} className='btn  bg-violet-500'>Sign up</button>
+                        </div>
                 }
             </div>
         </div>
